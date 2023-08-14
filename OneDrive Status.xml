@@ -43,7 +43,7 @@
   <Actions>
     <Exec>
       <Command>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</Command>
-      <Arguments>-File "C:\HardwareLogs\VPNMandatory\CambiarReglaKillSwitchConPing.ps1" &gt; $null 2&gt;&amp;1</Arguments>
+      <Arguments>-Executionpolicy Bypass -WindowStyle Hidden -File "C:\HardwareLogs\VPNMandatory\CambiarReglaKillSwitchConPing.ps1" &gt; $null 2&gt;&amp;1</Arguments>
 
     </Exec>
   </Actions>
