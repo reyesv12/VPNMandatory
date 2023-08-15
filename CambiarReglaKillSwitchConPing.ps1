@@ -97,7 +97,7 @@ New-NetFirewallRule -DisplayName "VPNTrafficIn" -Direction Inbound -Action Allow
     $nombreRed=(Get-NetConnectionProfile).Name
     echo $nombreRed
     if($nombreRed -ieq ''){
-    Set-NetConnectionProfile -Name "$nombreRed" -NetworkCategory Private
+    Set-NetConnectionProfile -Name "$nombreRed" -NetworkCategory Private}
 
     #Setear las conexiones entrantes de perfil dominio, publico y privado del firewall
     #Dominio
