@@ -94,15 +94,18 @@ New-NetFirewallRule -DisplayName "VPNTrafficIn" -Direction Inbound -Action Allow
 
 
     #Setear la conexión actual a privado
-    $nombreRed=(Get-NetConnectionProfile).Name
-    echo $nombreRed
-$nombreRed = (Get-NetConnectionProfile).Name
+    $perfiles = Get-NetConnectionProfile
 
-if ([string]::IsNullOrWhiteSpace($nombreRed)) {
+if ($perfiles.Count -eq 0) {
     Write-Host "No estás conectado a ninguna red."
 } else {
-    Set-NetConnectionProfile -Name "$nombreRed" -NetworkCategory Private
+    foreach ($perfil in $perfiles) {
+        $nombreRed = $perfil.Name
+        Set-NetConnectionProfile -Name "$nombreRed" -NetworkCategory Private
+        Write-Host "Perfil de red de '$nombreRed' configurado como privado."
+    }
 }
+
 
     #Setear las conexiones entrantes de perfil dominio, publico y privado del firewall
     #Dominio
