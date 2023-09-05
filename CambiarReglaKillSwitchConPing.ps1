@@ -110,8 +110,8 @@ if ($perfiles.Count -eq 0) {
     #Setear las conexiones entrantes de perfil dominio, publico y privado del firewall
     #Dominio
     Set-NetFirewallProfile -Profile Domain -Enabled True
-    Set-NetFirewallProfile -Profile Domain -DefaultInboundAction Block
-    Set-NetFirewallProfile -Profile Domain -DefaultOutboundAction Block
+    Set-NetFirewallProfile -Profile Domain -DefaultInboundAction Allow
+    Set-NetFirewallProfile -Profile Domain -DefaultOutboundAction Allow
 
     #Publico
     Set-NetFirewallProfile -Profile Public -Enabled True
