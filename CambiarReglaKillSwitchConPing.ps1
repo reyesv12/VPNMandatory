@@ -20,6 +20,29 @@ New-NetFirewallRule -DisplayName "Allow Ping" -Direction Outbound -Protocol ICMP
 
 while ($true) {
 
+#REGLA DE TELEMETRÍA
+
+$ruleNameIn = "FortiClientTelemetryOUT"
+$ruleExists = Get-NetFirewallRule | Where-Object { $_.DisplayName -eq $ruleNameIn }
+
+ 
+
+if ($ruleExists) { Write-Output "La regla '$ruleNameIn' existe en el firewall." }
+else { Write-Output "La regla '$ruleNameIn' no existe en el firewall y se creo"
+# Crear regla de salida
+New-NetFirewallRule -DisplayName "FortiClientTelemetryOUT" -Direction Outbound -Action Allow -Profile Any -Protocol TCP -LocalPort 8013 -RemoteAddress $allowedIPs
+
+ 
+
+# Crear regla de entrada
+New-NetFirewallRule -DisplayName "FortiClientTelemetryIN" -Direction Inbound -Action Allow -Profile Any -Protocol TCP -LocalPort 8013 -RemoteAddress $allowedIPs
+
+ 
+
+}
+
+
+
     # Crear una regla de entrada para permitir el tráfico desde las direcciones IP especificadas
 
     $ruleNameIn = "Permitir_Trafico_Salida"
