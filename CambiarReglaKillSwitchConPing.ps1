@@ -58,7 +58,7 @@ $ruleExists = Get-NetFirewallRule | Where-Object { $_.DisplayName -eq $ruleNameI
 
 if ($ruleExists) { Write-Output "La regla '$ruleNameIn' existe en el firewall." }
 else { Write-Output "La regla '$ruleNameIn' no existe en el firewall y se creo"
-New-NetFirewallRule -DisplayName $ruleNameIn -Direction Inbound -Action Allow -Protocol Any -RemoteAddress $allowedIPs -Profile Any }
+New-NetFirewallRule -DisplayName $ruleNameIn -Direction Outbound -Action Allow -Protocol Any -RemoteAddress $allowedIPs -Profile Any }
 
 
 
