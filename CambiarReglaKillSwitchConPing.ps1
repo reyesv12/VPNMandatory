@@ -1,4 +1,4 @@
-﻿#POLITICA DE EJECUCION DE SCRIPTS
+#POLITICA DE EJECUCION DE SCRIPTS
 Set-ExecutionPolicy ByPass -Force
 
 # Lista de direcciones IP permitidas
@@ -14,8 +14,26 @@ else { Write-Output "La regla '$ruleNameIn' no existe en el firewall y se creo"
 #Ping rule
 New-NetFirewallRule -DisplayName "Allow Ping" -Direction Outbound -Protocol ICMPv4 -IcmpType 8 -Action Allow}
 
+#teamviewer rule
+$ruleNameIn = "TeamViewerOut"
+$ruleExists = Get-NetFirewallRule | Where-Object { $_.DisplayName -eq $ruleNameIn }
+
+ 
+
+if ($ruleExists) { Write-Output "La regla '$ruleNameIn' existe en el firewall." }
+else { Write-Output "La regla '$ruleNameIn' no existe en el firewall y se creo"
+# Crear regla de salida
+New-NetFirewallRule -DisplayName "TeamViewerOutTCP" -Direction Outbound -Action Allow -Profile Any -Protocol TCP -LocalPort 5938 -RemoteAddress $allowedIPs
+New-NetFirewallRule -DisplayName "TeamViewerOutUDP" -Direction Outbound -Action Allow -Profile Any -Protocol UDP -LocalPort 5938 -RemoteAddress $allowedIPs
+
+ 
+
+# Crear regla de entrada
+New-NetFirewallRule -DisplayName "TeamViewerINTCP" -Direction Inbound -Action Allow -Profile Any -Protocol TCP -LocalPort 5938 -RemoteAddress $allowedIPs
+New-NetFirewallRule -DisplayName "TeamViewerINUDP" -Direction Inbound -Action Allow -Profile Any -Protocol UDP -LocalPort 5938 -RemoteAddress $allowedIPs
 
 
+}
 
 
 while ($true) {
@@ -190,5 +208,4 @@ if ($perfiles.Count -eq 0) {
     Start-Sleep -Seconds 5
 
 }
-
 
