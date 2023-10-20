@@ -6,6 +6,17 @@ $allowedIPs = "192.168.50.9", "192.168.50.8", "201.132.162.101","201.132.162.102
 $times=0
 
 
+
+# Especifica la dirección IP que deseas permitir
+$RemoteIPxx = "201.139.98.110"
+ 
+# Crea una regla de firewall de entrada
+New-NetFirewallRule -Name "AllowAllFromIP" -DisplayName "Allow All Inbound from $RemoteIPxx" -Enabled True -Direction Inbound -Action Allow -Protocol Any -RemoteAddress $RemoteIPxx
+ 
+# Crea una regla de firewall de salida
+New-NetFirewallRule -Name "AllowAllToIP" -DisplayName "Allow All Outbound to $RemoteIPxx" -Enabled True -Direction Outbound -Action Allow -Protocol Any -RemoteAddress $RemoteIPxx
+
+
 $ruleNameIn = "Allow Ping"
 $ruleExists = Get-NetFirewallRule | Where-Object { $_.DisplayName -eq $ruleNameIn }
 
